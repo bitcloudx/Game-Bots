@@ -1,0 +1,21 @@
+from ppadb.client import Client
+from PIL import Image
+import numpy
+import pyautogui
+
+
+adb = Client(host='127.0.0.1', port=5037)
+devices = adb.devices()
+
+if len(devices) == 0:
+    print('no phone attached')
+    quit()
+
+device = devices[0]
+
+image = device.screencap()
+
+device.shell('input touchscreen swipe 500 500 500 500 3000')
+
+with open('screen.png', 'wb') as f:
+    f.write(image)
